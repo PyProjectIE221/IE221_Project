@@ -3,6 +3,7 @@
 
 class ReadData:
     def __init__(self):
-        
+
         #leave this line below
         super().__init__()
+    
