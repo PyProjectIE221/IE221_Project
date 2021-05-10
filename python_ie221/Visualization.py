@@ -2,4 +2,7 @@
 #-*- coding: utf-8 -*-
 
 class Visualization:
-    pass
+    def __init__(self):
+        
+        #leave this line below
+        super().__init__()

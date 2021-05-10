@@ -65,3 +65,6 @@ class RandomForest(RandomForestClassifier):
     """
     predict_score = super().score(X_test,y_test)
     return predict_score
+        
+        #Leave this line below
+        super().__init__()
