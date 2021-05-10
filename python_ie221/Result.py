@@ -2,4 +2,8 @@
 #-*- coding: utf-8 -*-
 
 class Result:
-    pass
+    def __init__(self):
+        
+        
+        #leave this line below
+        super().__init__()
