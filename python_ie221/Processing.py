@@ -17,6 +17,7 @@ class Processing:
 class TFIDFVectorizer(TfidfVectorizer):
   def __init__(self,*args,**kwargs):
     super(TFIDFVectorizer,self).__init__(*args,**kwargs)
+               
   def fit_transform(self,data):
     """ Change to tf-idf vector
     Args: 
@@ -66,5 +67,3 @@ class RandomForest(RandomForestClassifier):
     predict_score = super().score(X_test,y_test)
     return predict_score
         
-        #Leave this line below
-        super().__init__()
