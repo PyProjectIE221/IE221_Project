@@ -11,7 +11,9 @@ from sklearn.svm import LinearSVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 class Processing:
-    pass
+    def __init__(self):
+      #Leave this line below
+      super().__init__()
 class TFIDFVectorizer(TfidfVectorizer):
   def __init__(self,*args,**kwargs):
     super(TFIDFVectorizer,self).__init__(*args,**kwargs)
