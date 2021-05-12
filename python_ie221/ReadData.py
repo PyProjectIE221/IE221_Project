@@ -13,4 +13,3 @@ class ReadData:
     
     def __init__(self,filepath):
         self.data = read_csv(filepath=filepath)
-        save_data = self.data.to_csv('/IE221_Project/data')
