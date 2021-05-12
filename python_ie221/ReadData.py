@@ -10,6 +10,7 @@ class ReadData:
         #leave this line below
         super().__init__()
     
+    
     def __init__(self,filepath):
         self.data = read_csv(filepath=filepath)
         save_data = self.data.to_csv('/IE221_Project/data')
