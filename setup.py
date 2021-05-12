@@ -1,15 +1,11 @@
 from setuptools import setup
 
 setup(
-   name='foo00',
+   name='python_ie221',
    version='1.0',
-   description='A useful module',
-   author='Man Foo',
-   author_email='foomail@foo.com',
-   packages=['foo'],  #same as name
-   install_requires=['wheel', 'bar', 'greek'], #external packages as dependencies
-   scripts=[
-            'scripts/cool',
-            'scripts/skype',
-           ]
+   description='Use SKLearn for NLP',
+   author='LuatTB_QuanHN_QuanNM',
+   author_email='18521068@gm.uit.edu.vn',
+   packages=['python_ie221'],  #same as name
+   install_requires=['matplotlib', 'scikit-learn', 'numpy','pandas'], #external packages as dependencies
 )
