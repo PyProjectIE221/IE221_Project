@@ -1,15 +1,9 @@
 import pandas as pd
-import numpy as np
-import string
-import nltk
-nltk.download('punkt')
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-
+from collections import Counter
 class PreProcessing:
-
+    
     def __init__(self):
-        
         #Leave this line below
         super().__init__()
     
@@ -24,43 +18,6 @@ class PreProcessing:
         
         """
         print("\nNumber of NaN in your data: ",data.isnull().sum().sum())
-        return data.isnull().sum()
-    
-    def fill_null(self, data):
-        """Find any null data and replace it with meadian value in column or drop it if its columns is string
-        
-        Args:
-            data(dataFrame): your data with missing value
-            method(string): median, mean, avg, max , min
-            
-        Returns:
-            dataFrame: data with no missing value
-        """
-        for col in data.columns:
-            if(pd.api.types.is_numeric_dtype(data[col]) == False):
-                pd.DataFrame(data[col]).dropna(axis=1)
-            else:
-                if(data[col].isnull().any() == True):
-                    pd.DataFrame(data[col]).fillna(data[col].median, inplace = True)
-                    
-        print("Now, your number of nan data is ",data.isnull().sum().sum())
-        
-        return data
-
-# import pandas as pd  
-studentData = {
-    'name' : ['jack', 'Riti', 'dd'],
-    'age' : [34, 30, None],
-    'city' : ['Sydney', 'Delhi', None]
-}
-a = pd.DataFrame(studentData)
-
-if(pd.api.types.is_numeric_dtype(studentData['city']) == False):
-    a.dropna(axis = 0)
-# a.apply((lambda x: x.fillna(x.mean()) if pd.api.types.is_dtype(x) == True))
-        
-        """
-        print("\nNumber of NaN in your data: ",data.isnull().sum().sum(),'\n')
         return data.isnull().sum()
     
     def fill_null(self, data, method = 'median'):
@@ -82,7 +39,8 @@ if(pd.api.types.is_numeric_dtype(studentData['city']) == False):
                     
         print("\nNow, your number of nan data is ",data.isnull().sum().sum())
         
-        return data
+        self.pre_data = data
+        return self.pre_data
     
     def remove_punc_and_lower(self, data):
         """Remove all punctuation and change letter to lower case (except Date and Label columns)
@@ -99,9 +57,12 @@ if(pd.api.types.is_numeric_dtype(studentData['city']) == False):
                 continue
             if col == "Label":
                 continue
-            data[col] = data[col].str.lower()
-            data[col].replace(["b"+"[^a-zA-Z]","[^a-zA-Z]"]," ",True,None,True)
-        return data
+
+            data.loc[:,col].str.lower()
+            data.loc[:,col].replace(["b"+"[^a-zA-Z]","[^a-zA-Z]"]," ",True,None,True)
+        
+        self.pre_data = data
+        return self.pre_data
     
     def combine_title(self,data):
         """Combine all title to a column  
@@ -116,14 +77,14 @@ if(pd.api.types.is_numeric_dtype(studentData['city']) == False):
         for i in range(0,len(data.index)):
             head_line.append(''.join(str(x) for x in data.iloc[i,2:-1]))
         
-        new_data = data.copy()
-        new_data = new_data.drop(new_data.iloc[:,2:], axis=1)
-        new_data['title'] = head_line
+        data = data.drop(data.iloc[:,2:], axis=1)
+        data['title'] = head_line
         
-        return new_data
+        self.pre_data = data
+        return self.pre_data
     
-    def tokeninze_and_remove_stopword(self,data):
-        """Split every word and remove common word cause it has no value for our processing
+    def remove_stopword(self,data):
+        """Remove common word cause it has no value for our processing
         
         Args:
             data(dataFrame)
@@ -134,20 +95,41 @@ if(pd.api.types.is_numeric_dtype(studentData['city']) == False):
         For ex:  "A and B is friend" -> ['A','B','friend']
         """
         
-        stop_words = set(stopwords.words('English'))
+        stop_words = stopwords.words('english')
+        stopwords_dict = Counter(stop_words)
         list_filter = []
-        for row in data:
-            word_tokens = word_tokenize(row[2])
-            filter_sentence = [w for w in word_tokens if w not  in stop_words]
-            list_filter.append(filter_sentence)
-        print(list_filter)
+        for row in range(0,data.shape[0]):
+             fil = ' '.join([word for word in data.iloc[row,2].split() if word not in stopwords_dict])
+             list_filter.append(fil)
+        data['filter'] = list_filter
         
+        data = data.drop(columns = 'title')
+        
+        self.pre_data = data
+        return self.pre_data
     
-a = PreProcessing()
-data = pd.read_csv('data\Combined_News_DJIA.csv')
-a.count_null(data)
-data = a.fill_null(data,'mean')
-data = a.remove_punc_and_lower(data)
-data = a.combine_title(data)
-a.tokeninze_and_remove_stopword(data)
+    def fully_preprocess(self,data, method ='median'):
+        """ PreProcess data with all step : fill null, remove stop word, combine, ...
+        
+        Args:
+            data(dataFrame): original data
+            method(string): mean, median, max, min
+        
+        Returns:
+            dataFrame: preprocessed data and file csv in 'data\preprocessed_data.csv'
+        """
+        self.count_null(data)
+        fill_data = self.fill_null(data)
+        remove_data = self.remove_punc_and_lower(fill_data)
+        comb_remove_data = self.combine_title(remove_data)
+        final = self.remove_stopword(comb_remove_data)
+        
+        final_csv = final.set_index('Date')
+        final_csv.to_csv('data\preprocessed_data.csv')
+        
+        self.pre_data = final
+        return self.pre_data
+    
+    
+
 
