@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-   name='foo',
+   name='foo00',
    version='1.0',
    description='A useful module',
    author='Man Foo',
