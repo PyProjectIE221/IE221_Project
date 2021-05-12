@@ -41,29 +41,178 @@ class Countvectorizer(CountVectorizer):
     """
     vectorized = super().fit_transform(data)
     return vectorized
+class TFIDFVectorizer(TfidfVectorizer):
+  def __init__(self,*args,**kwargs):
+    super(TFIDFVectorizer,self).__init__(*args,**kwargs)
+  def fit_transform(self,data):
+    """ Change to tf-idf vector
+    Args: 
+      data (list) : path to your data 
+    
+    Returns:
+      sparse matrix of (n_samples, n_features)
+    """
+    vectorized = super().fit_transform(data)
+    return vectorized
+class Countvectorizer(CountVectorizer):
+  def __init__(self,*args,**kwargs):
+    super(Countvectorizer,self).__init__(*args,**kwargs)
+  def fit_transform(self,data):
+    """ Change to tf-idf vector
+    Args: 
+      data (list) : path to your data 
+    
+    Returns:
+      sparse matrix of (n_samples, n_features)
+    """
+    vectorized = super().fit_transform(data)
+    return vectorized
 class RandomForest(RandomForestClassifier):
   def __init__(self):
     super(RandomForest,self).__init__()
   def fit(self,X_train,y_train):
     """ Build a forest of trees from the training set (X, y).
+    
     Args:
-      X_train : array-like, sparse matrix of shape (n_samples, n_features)
-      y_train : array-like of shape (n_samples,) or (n_samples, n_outputs)
+      X_train(array-like, sparse matrix of shape (n_samples, n_features)): Train dataset
+      y_train(array-like, sparse matrix of shape (n_samples,) or (n_samples, n_outputs)): Train labels
 
     Returns:
-      self: object
+      self(object) : class
+
     """
     object = super().fit(X_train,y_train)
     return object
   def score(self,X_test,y_test):
     """ Return the mean accuracy on the given test data and labels.
     Args:
-      X_test : array-like of shape (n_samples, n_features)
-      y_test : array-like of shape (n_samples,) or (n_samples, n_outputs)
+      X_test(array-like of shape (n_samples, n_features)): Test dataset
+      y_test(array-like of shape (n_samples,) or (n_samples, n_outputs)): Test labels
 
     Return:
-      Score : float
+      Score(float) : Accuracy of model
     """
     predict_score = super().score(X_test,y_test)
     return predict_score
+  def predict(self,X):
+    """ Predict the class labels for the provided data.
+    Args:
+      X(array-like of shape (n_queries, n_features), or (n_queries, n_indexed)): Data which want to predict
+
+    Results:
+      y(ndarray of shape (n_queries,) or (n_queries, n_outputs)): Result from predict on X  
+    """
+    y = super().predict(X)
+    return y
+class KNNClassifier(KNeighborsClassifier):
+  def __init__(self):
+    super(KNNClassifier,self).__init__()
+  def fit(self,X_train,y_train):
+    """ Fit the k-nearest neighbors classifier from the training dataset.
+    
+    Args:
+      X_train(array-like, sparse matrix of shape (n_samples, n_features)): Train dataset
+      y_train(array-like, sparse matrix of shape (n_samples,) or (n_samples, n_outputs)): Train labels
+
+    Returns:
+      self(object) : class
+
+    """
+    object = super().fit(X_train,y_train)
+    return object
+  def score(self,X_test,y_test):
+    """ Return the mean accuracy on the given test data and labels.
+    Args:
+      X_test(array-like of shape (n_samples, n_features)): Test dataset
+      y_test(array-like of shape (n_samples,) or (n_samples, n_outputs)): Test labels
+
+    Return:
+      Score(float) : Accuracy of model
+    """
+    predict_score = super().score(X_test,y_test)
+    return predict_score
+  def predict(self,X):
+    """ Predict the class labels for the provided data.
+    Args:
+      X(array-like of shape (n_queries, n_features), or (n_queries, n_indexed)): Data which want to predict
+
+    Results:
+      y(ndarray of shape (n_queries,) or (n_queries, n_outputs)): Result from predict on X 
+    """
+    y = super().predict(X)
+    return y
+class SVMLinearSVC(LinearSVC):
+  def __init__(self):
+    super(SVMLinearSVC,self).__init__()
+  def fit(self,X_train,y_train):
+    """ Fit the k-nearest neighbors classifier from the training dataset.
+    
+    Args:
+      X_train(array-like, sparse matrix of shape (n_samples, n_features)): Train dataset
+      y_train(array-like, sparse matrix of shape (n_samples,) or (n_samples, n_outputs)): Train labels
+
+    Returns:
+      self(object) : class
+
+    """
+    object = super().fit(X_train,y_train)
+    return object
+  def score(self,X_test,y_test):
+    """ Return the mean accuracy on the given test data and labels.
+    Args:
+      X_test(array-like of shape (n_samples, n_features)): Test dataset
+      y_test(array-like of shape (n_samples,) or (n_samples, n_outputs)): Test labels
+
+    Return:
+      Score(float) : Accuracy of model
+    """
+    predict_score = super().score(X_test,y_test)
+    return predict_score
+  def predict(self,X):
+    """ Predict the class labels for the provided data.
+    Args:
+      X(array-like of shape (n_queries, n_features), or (n_queries, n_indexed)): Data which want to predict
+
+    Results:
+      y(ndarray of shape (n_queries,) or (n_queries, n_outputs)): Result from predict on X 
+    """
+    y = super().predict(X)
+    return y
+class Voting(VotingClassifier):
+  def __init__(self):
+    super(Voting,self).__init__()
+  def fit(self,X_train,y_train):
+    """ Fit the k-nearest neighbors classifier from the training dataset.
+    
+    Args:
+      X_train(array-like, sparse matrix of shape (n_samples, n_features)): Train dataset
+      y_train(array-like, sparse matrix of shape (n_samples,) or (n_samples, n_outputs)): Train labels
+
+    Returns:
+      self(object) : class
+
+    """
+    object = super().fit(X_train,y_train)
+    return object
+  def score(self,X_test,y_test):
+    """ Return the mean accuracy on the given test data and labels.
+    Args:
+      X_test(array-like of shape (n_samples, n_features)): Test dataset
+      y_test(array-like of shape (n_samples,) or (n_samples, n_outputs)): Test labels
+
+    Return:
+      Score(float) : Accuracy of model
+    """
+    predict_score = super().score(X_test,y_test)
+    return predict_score
+  def predict(self,X):
+    """ Predict the class labels for the provided data.
+    Args:
+      X(array-like of shape (n_queries, n_features), or (n_queries, n_indexed)): Data which want to predict
+
+    Results:
+      y(ndarray of shape (n_queries,) or (n_queries, n_outputs)): Result from predict on X 
+    """
+    y = super().predict(X)
+    return y
         
