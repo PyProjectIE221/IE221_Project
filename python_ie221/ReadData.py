@@ -4,10 +4,10 @@
 import pandas as pd
 from pandas.io.parsers import read_csv
 
-
-class ReadData(object):
+class ReadData:
 
     def __init__(self):
+
         #leave this line below
         super().__init__()
     
@@ -31,3 +31,4 @@ class ReadData(object):
         """
         self.data = pd.read_csv(filepath)
         return self.data
+    
