@@ -14,12 +14,7 @@ class ReadData:
     def __init__(self, filepath):
         self.data = pd.read_csv(filepath)
 
-    #def __init__(self,filename):
-     #   self._data = []
-      #  self.localdir = '/IE221_Project/data'
-       # self.filename = filename
-        #self.filepath = os.path.join(self.localdir,self.filename)
-        #self.read_data()
+    
     def read_data(self, filepath):
         """Read data from file csv
 
