@@ -1,12 +1,13 @@
 import pandas as pd
 from nltk.corpus import stopwords
 from collections import Counter
+pd.options.mode.chained_assignment = None
 class PreProcessing:
     
     def __init__(self):
         #Leave this line below
         super().__init__()
-    
+            
     def count_null(self, data):
         """Count how many null in your data
         
@@ -37,7 +38,7 @@ class PreProcessing:
                 data[col].fillna(value = dict_func[method](data[col]))
         data = data.dropna()
                     
-        print("\nNow, your number of nan data is ",data.isnull().sum().sum())
+        print("\nAfter fill, your number of nan data is ",data.isnull().sum().sum())
         
         self.pre_data = data
         return self.pre_data
@@ -57,8 +58,8 @@ class PreProcessing:
                 continue
             if col == "Label":
                 continue
-
-            data.loc[:,col].str.lower()
+            temp = data.loc[:,col].copy()
+            data.loc[:,col] = temp.str.lower()
             data.loc[:,col].replace(["b"+"[^a-zA-Z]","[^a-zA-Z]"]," ",True,None,True)
         
         self.pre_data = data
@@ -131,5 +132,3 @@ class PreProcessing:
         return self.pre_data
     
     
-
-
