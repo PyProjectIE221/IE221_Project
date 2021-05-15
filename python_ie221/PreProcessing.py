@@ -23,23 +23,20 @@ class PreProcessing:
         print("\nNumber of NaN in your data: ",data.isnull().sum().sum())
         return data.isnull().sum()
     
-    def fill_null(self, data, method = 'median'):
-        """Find any null data and replace it with meadian value in column or drop it if its columns is string
+    def fill_null(self, data):
+        """Find any null  data and replace it with ' ' in column or drop if it is 'LABEL'
         
         Args:
             data(dataFrame): your data with missing value
-            method(string): mean, median, max, min
+            
         Returns:
             dataFrame: data with no missing value
         """
-        dict_func = {'max': pd.Series.max, 'min': pd.Series.min, 'median': pd.Series.median,
-                     'mean': pd.Series.mean }
-        
         for col in data.columns:
-            if(pd.api.types.is_numeric_dtype(data[col]) == True):
-                data[col].fillna(value = dict_func[method](data[col]))
+            if(pd.api.types.is_string_dtype(data[col]) == True):
+                data[col].fillna(' ', inplace = True)
         data = data.dropna()
-                    
+        data.reset_index(inplace=True)
         print("\nAfter fill, your number of nan data is ",data.isnull().sum().sum())
         
         self.pre_data = data
@@ -160,4 +157,5 @@ class PreProcessing:
         self.split_x_y()
         self.convert_train_test()
         return self.pre_data
-    
+
+

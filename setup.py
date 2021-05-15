@@ -7,5 +7,5 @@ setup(
    author='LuatTB_QuanHN_QuanNM',
    author_email='18521068@gm.uit.edu.vn',
    packages=['python_ie221'],  #same as name
-   install_requires=['matplotlib', 'scikit-learn', 'numpy','pandas'], #external packages as dependencies
+   install_requires=['matplotlib', 'scikit-learn', 'numpy','pandas', 'pytest'], #external packages as dependencies
 )
