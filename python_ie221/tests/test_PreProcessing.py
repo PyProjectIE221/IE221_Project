@@ -11,9 +11,12 @@ d2 =  {'Date': ['1','2', '3', '4' ],
      'Top1': ['cat dog','monkey',float("NaN"),'horse cow'],
      'Top2': ['penguin','pig','fox', float("NaN")]
      }
+
+d3 = {'top1': 'b"This is @../,!@$^&*%^&* cat:;''*/-+', 'top2':'"This" is a dog'}
+
 data = pd.DataFrame(d)
 data2 = pd.DataFrame(d2)
-
+data3 = pd.DataFrame(d3, index=[0])
 class TestFillNull(object):
         def test_fill_null_miss_string(self):
             predict = pd.DataFrame({'Date': ['1','2', '3', '4' ], 
@@ -36,9 +39,9 @@ class TestFillNull(object):
             assert (predict == actual).all()
             
 
-predict = pd.DataFrame({'Date': ['1','2', '3', '4' ], 
-                                        'Label': [0, 1, 0, 1], 
-                                        'Top1': ['cat dog','monkey',' ','horse cow'],
-                                        'Top2': ['penguin','pig','fox', ' ']})
-            
-actual = PreProcessing().fill_null(data)
+def test_remove_punc_and_lower():
+    predict = pd.DataFrame({'top1': ' this is                 cat        ' , 'top2':' this  is a dog'},index=[0])
+    actual = PreProcessing().remove_punc_and_lower(data3)
+    assert predict.equals(actual)
+    
+
