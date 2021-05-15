@@ -9,3 +9,5 @@ class Project(ReadData, PreProcessing, Processing, Visualization, Result):
     def __init__(self):
         print("PROJECT")
         super().__init__()
+        super(ReadData, self).__init__()
+        
