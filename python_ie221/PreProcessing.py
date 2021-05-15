@@ -1,7 +1,9 @@
 import pandas as pd
 from nltk.corpus import stopwords
 from collections import Counter
+from sklearn.model_selection import train_test_split
 pd.options.mode.chained_assignment = None
+
 class PreProcessing:
     
     def __init__(self):
@@ -109,8 +111,34 @@ class PreProcessing:
         self.pre_data = data
         return self.pre_data
     
+    def split_x_y(self):
+        
+        self.x = self.pre_data.loc[:,'filter']
+        self.y = self.pre_data.loc[:,'Label']
+      
+    def convert_train_test(self):
+        """Convert data to train/ test set. Then convert it to LIST type for processing
+        
+        Args:
+            self.pre_data(dataFrame): need a preprocessed data be like a PreProcessing attribute
+       
+        Returns:
+            list: attribute x_train/test , y_train/test 
+        """
+        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(self.x, self.y, test_size = 0.2)
+        self.x_train.to_csv(r'data\train_test_split\x_train.csv')
+        self.y_train.to_csv(r'data\train_test_split\y_train.csv')
+        self.x_test.to_csv(r'data\train_test_split\x_test.csv')
+        self.y_test.to_csv(r'data\train_test_split\y_test.csv')
+        self.x_train = self.x_train.tolist()
+        self.x_test = self.x_test.tolist()
+        self.y_test = self.y_test.tolist()
+        self.y_train = self.y_train.tolist()
+        
+        
     def fully_preprocess(self,data, method ='median'):
-        """ PreProcess data with all step : fill null, remove stop word, combine, ...
+        """ PreProcess data with all step : fill null, remove stop word, combine. Finally, split data
+        to x and y
         
         Args:
             data(dataFrame): original data
@@ -118,17 +146,18 @@ class PreProcessing:
         
         Returns:
             dataFrame: preprocessed data and file csv in 'data\preprocessed_data.csv'
+            create x,y train/test attribute
+            
         """
         self.count_null(data)
-        fill_data = self.fill_null(data)
-        remove_data = self.remove_punc_and_lower(fill_data)
-        comb_remove_data = self.combine_title(remove_data)
-        final = self.remove_stopword(comb_remove_data)
-        
-        final_csv = final.set_index('Date')
+        self.pre_data = self.fill_null(data)
+        self.pre_data = self.remove_punc_and_lower(self.pre_data)
+        self.pre_data = self.combine_title(self.pre_data)
+        self.pre_data = self.remove_stopword(self.pre_data)
+        final_csv = self.pre_data
+        final_csv = final_csv.set_index('Date')
         final_csv.to_csv('data\preprocessed_data.csv')
-        
-        self.pre_data = final
+        self.split_x_y()
+        self.convert_train_test()
         return self.pre_data
-    
     
