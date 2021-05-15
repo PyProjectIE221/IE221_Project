@@ -36,7 +36,6 @@ class PreProcessing:
             if(pd.api.types.is_string_dtype(data[col]) == True):
                 data[col].fillna(' ', inplace = True)
         data = data.dropna()
-        data.reset_index(inplace=True)
         print("\nAfter fill, your number of nan data is ",data.isnull().sum().sum())
         
         self.pre_data = data

@@ -36,4 +36,9 @@ class TestFillNull(object):
             assert (predict == actual).all()
             
 
-
+predict = pd.DataFrame({'Date': ['1','2', '3', '4' ], 
+                                        'Label': [0, 1, 0, 1], 
+                                        'Top1': ['cat dog','monkey',' ','horse cow'],
+                                        'Top2': ['penguin','pig','fox', ' ']})
+            
+actual = PreProcessing().fill_null(data)
