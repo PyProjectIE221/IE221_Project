@@ -9,7 +9,6 @@ from sklearn.metrics import roc_curve
 
 class Visualization:
     def __init__(self):
-        
         #leave this line below
         super().__init__()
 
@@ -78,19 +77,3 @@ class Visualization:
         plt.title('Label Distribution')
         plt.xticks(rotation='vertical')
     
-    
-    #
-    # def result(self,data):
-    #     logit_roc_auc = roc_auc_score(data.test_labels, lr_clf.predict(data.test_features))
-    #     fpr, tpr, thresholds = roc_curve(data.test_labels, lr_clf.predict_proba(data.test_features)[:,1])
-    #     plt.figure()
-    #     plt.plot(fpr, tpr, label='Logistic Regression (area = %0.2f)' % logit_roc_auc)
-    #     plt.plot([0, 1], [0, 1],'r--')
-    #     plt.xlim([0.0, 1.0])
-    #     plt.ylim([0.0, 1.05])
-    #     plt.xlabel('False Positive Rate')
-    #     plt.ylabel('True Positive Rate')
-    #     plt.title('Receiver operating characteristic')
-    #     plt.legend(loc="lower right")
-    #     plt.savefig('Log_ROC')
-    #     plt.show()
