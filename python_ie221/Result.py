@@ -6,10 +6,9 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import confusion_matrix
 class Result:
     def __init__(self):
-        
-        
         #leave this line below
         super().__init__()
+  
     def confusionmatrix(self, y_true,y_pred):
       """ Compute confusion matrix to evaluate the accuracy of a classification.
       
@@ -21,7 +20,8 @@ class Result:
         C(ndarray of shape (n_classes, n_classes)):Confusion matrix whose i-th row and j-th column entry indicates the number of samples with true label being i-th class and predicted label being j-th class.
 
       """
-      return confusion_matrix(y_true,y_pred)
+      self.Cm = confusion_matrix(y_true,y_pred)
+      return self.Cm
     def accuracyscore(self, y_true,y_pred):
       """ Accuracy classification score.
       
@@ -33,7 +33,8 @@ class Result:
           
         Score(float):Predict score
       """
-      return accuracy_score(y_true,y_pred)
+      self.As = accuracy_score(y_true,y_pred)
+      return self.As
     def averageprecisionscore(self, y_true,y_pred):
       """ Compute average precision (AP) from prediction scores.
       
@@ -45,7 +46,8 @@ class Result:
           
         average_precision(float) : AP accuracy
       """
-      return average_precision_score(y_true,y_pred)
+      self.Ap = average_precision_score(y_true,y_pred)
+      return self.Ap
     def f1score(self, y_true,y_pred):
       """ Compute the F1 score, also known as balanced F-score or F-measure.
       
@@ -57,4 +59,5 @@ class Result:
     Results:
         f1_score(float or array of float)
       """
-      return f1_score(y_true , y_pred)
+      self.F1 = f1_score(y_true , y_pred)
+      return self.F1
