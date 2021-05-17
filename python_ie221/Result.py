@@ -22,6 +22,7 @@ class Result:
       """
       self.Cm = confusion_matrix(y_true,y_pred)
       return self.Cm
+  
     def accuracyscore(self, y_true,y_pred):
       """ Accuracy classification score.
       

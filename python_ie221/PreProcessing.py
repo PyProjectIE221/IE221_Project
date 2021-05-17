@@ -138,7 +138,6 @@ class PreProcessing:
         
         Args:
             data(dataFrame): original data
-            method(string): mean, median, max, min
         
         Returns:
             dataFrame: preprocessed data and file csv in 'data\preprocessed_data.csv'
