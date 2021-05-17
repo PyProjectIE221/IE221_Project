@@ -8,10 +8,7 @@ class Result:
     def __init__(self):
         #leave this line below
         super().__init__()
-        self.Cm = None
-        self.Ap = None
-        self.As = None
-        self.F1 = None
+  
     def confusionmatrix(self, y_true,y_pred):
       """ Compute confusion matrix to evaluate the accuracy of a classification.
       
