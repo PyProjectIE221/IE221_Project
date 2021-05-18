@@ -14,11 +14,22 @@ class Processing:
     def __init__(self,x_train,x_test,y_train,y_test):
         #Leave this line below
         super().__init__()
-        self.RandomForest = RandomForest(x_train,y_train,x_test,y_test).random_process()
-        self.KNNClassifier = KNNClassifier(x_train,y_train,x_test,y_test).knn_process()
-        self.SVMLinearSVC = SVMLinearSVC(x_train,y_train,x_test,y_test).svm_process()
-        self.Voting = Voting(x_train,y_train,x_test,y_test).voting_process()
-
+        self.x_train = TFIDFVectorizer.fit_transform(x_train)
+        self.x_test = TFIDFVectorizer.fit_transform(x_test)
+        self.y_train = y_train
+        self.y_test = y_test
+    def RandomForest(self,**kwargs):
+        self.RF = RandomForest(self.x_train,self.y_train,self.x_test,self.y_test).random_process()
+        return self.RF
+    def KNNClassifier(self,**kwargs):
+        self.KNN = KNNClassifier(self.x_train,self.y_train,self.x_test,self.y_test).knn_process()
+        return self.KNN
+    def SVMLinearSVC(self,**kwargs):
+        self.SVM = SVMLinearSVC(self.x_train,self.y_train,self.x_test,self.y_test).svm_process()
+        return self.SVM
+    def Voting(self,**kwargs):
+        self.VT = Voting(self.x_train,self.y_train,self.x_test,self.y_test).voting_process()
+        return self.VT
 class TFIDFVectorizer(TfidfVectorizer):
     def __init__(self,*args,**kwargs):
         super(TFIDFVectorizer,self).__init__(*args,**kwargs)
@@ -93,6 +104,9 @@ class RandomForest(RandomForestClassifier):
         return y
     
     def random_process(self):
+        """ Save results into variables of class
+        
+        """
         self.ob = self.fit(self.x_train, self.y_train)
         self.y_pred = self.ob.predict(self.x_test)
         self.score = self.ob.score(self.x_test, self.y_test)
@@ -144,6 +158,9 @@ class KNNClassifier(KNeighborsClassifier):
         return y
     
     def knn_process(self):
+        """ Save results into variables of class
+        
+        """
         self.ob = self.fit(self.x_train, self.y_train)
         self.y_pred = self.ob.predict(self.x_test)
         self.score = self.ob.score(self.x_test, self.y_test)
@@ -193,6 +210,9 @@ class SVMLinearSVC(LinearSVC):
         y = super().predict(X)
         return y
     def svm_process(self):
+        """ Save results into variables of class
+        
+        """
         self.ob = self.fit(self.x_train, self.y_train)
         self.y_pred = self.ob.predict(self.x_test)
         self.score = self.ob.score(self.x_test, self.y_test)
@@ -242,6 +262,9 @@ class Voting(VotingClassifier):
         y = super().predict(X)
         return y
     def voting_process(self):
+        """ Save results into variables of class
+        
+        """
         self.ob = self.fit(self.x_train, self.y_train)
         self.y_pred = self.ob.predict(self.x_test)
         self.score = self.ob.score(self.x_test, self.y_test)
