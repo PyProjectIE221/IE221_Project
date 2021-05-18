@@ -5,9 +5,10 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import LinearSVC
+from sklearn.naive_bayes import BernoulliNB
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 class Processing:
@@ -19,17 +20,17 @@ class Processing:
         self.y_train = y_train
         self.y_test = y_test
     def RandomForest(self,**kwargs):
-        self.RF = RandomForest(self.x_train,self.y_train,self.x_test,self.y_test).random_process()
+        self.RF = RandomForest(self.x_train,self.y_train,self.x_test,self.y_test,**kwargs).random_process()
         return self.RF
     def KNNClassifier(self,**kwargs):
-        self.KNN = KNNClassifier(self.x_train,self.y_train,self.x_test,self.y_test).knn_process()
+        self.KNN = KNNClassifier(self.x_train,self.y_train,self.x_test,self.y_test,**kwargs).knn_process()
         return self.KNN
     def SVMLinearSVC(self,**kwargs):
-        self.SVM = SVMLinearSVC(self.x_train,self.y_train,self.x_test,self.y_test).svm_process()
+        self.SVM = SVMLinearSVC(self.x_train,self.y_train,self.x_test,self.y_test,**kwargs).svm_process()
         return self.SVM
-    def Voting(self,**kwargs):
-        self.VT = Voting(self.x_train,self.y_train,self.x_test,self.y_test).voting_process()
-        return self.VT
+    def Naive(self,**kwargs):
+        self.NV = Naive(self.x_train,self.y_train,self.x_test,self.y_test,**kwargs).naive_process()
+        return self.NV
 class TFIDFVectorizer(TfidfVectorizer):
     def __init__(self,*args,**kwargs):
         super(TFIDFVectorizer,self).__init__(*args,**kwargs)
@@ -218,9 +219,9 @@ class SVMLinearSVC(LinearSVC):
         self.score = self.ob.score(self.x_test, self.y_test)
         return self.ob
 
-class Voting(VotingClassifier):
+class Naive(BernoulliNB):
     def __init__(self,x_train,y_train,x_test,y_test,**kwargs):
-        super(Voting,self).__init__(**kwargs)
+        super(Naive,self).__init__(**kwargs)
         self.x_train = x_train
         self.y_train = y_train
         self.x_test = x_test
@@ -261,7 +262,7 @@ class Voting(VotingClassifier):
         """
         y = super().predict(X)
         return y
-    def voting_process(self):
+    def naive_process(self):
         """ Save results into variables of class
         
         """
