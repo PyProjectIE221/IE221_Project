@@ -16,7 +16,8 @@ class Processing:
         super().__init__()
         self.RandomForest = RandomForest(x_train,y_train,x_test,y_test).random_process()
         self.KNNClassifier = KNNClassifier(x_train,y_train,x_test,y_test).knn_process()
-            
+        self.SVMLinearSVC = SVMLinearSVC(x_train,y_train,x_test,y_test).svm_process()
+        self.Voting = Voting(x_train,y_train,x_test,y_test).voting_process()
 
 class TFIDFVectorizer(TfidfVectorizer):
     def __init__(self,*args,**kwargs):
@@ -191,7 +192,7 @@ class SVMLinearSVC(LinearSVC):
         """
         y = super().predict(X)
         return y
-    def knn_process(self):
+    def svm_process(self):
         self.ob = self.fit(self.x_train, self.y_train)
         self.y_pred = self.ob.predict(self.x_test)
         self.score = self.ob.score(self.x_test, self.y_test)
@@ -240,7 +241,7 @@ class Voting(VotingClassifier):
         """
         y = super().predict(X)
         return y
-    def knn_process(self):
+    def voting_process(self):
         self.ob = self.fit(self.x_train, self.y_train)
         self.y_pred = self.ob.predict(self.x_test)
         self.score = self.ob.score(self.x_test, self.y_test)
