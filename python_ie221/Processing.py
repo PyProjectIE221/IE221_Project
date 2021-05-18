@@ -12,7 +12,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 class Processing:
     def __init__(self,x_train,x_test,y_train,y_test):
-            #Leave this line below
+        #Leave this line below
         super().__init__()
         self.RandomForest = RandomForest(x_train,y_train,x_test,y_test).random_process()
         self.KNNClassifier = KNNClassifier(x_train,y_train,x_test,y_test).knn_process()
@@ -47,8 +47,8 @@ class Countvectorizer(CountVectorizer):
         return vectorized
 
 class RandomForest(RandomForestClassifier):
-    def __init__(self,x_train,y_train,x_test, y_test):
-        super(RandomForest,self).__init__()
+    def __init__(self,x_train,y_train,x_test, y_test,**kwargs):
+        super(RandomForest,self).__init__(**kwargs)
         self.x_train = x_train
         self.y_train = y_train
         self.x_test = x_test
@@ -149,8 +149,12 @@ class KNNClassifier(KNeighborsClassifier):
         return self.ob
 
 class SVMLinearSVC(LinearSVC):
-    def __init__(self):
-        super(SVMLinearSVC,self).__init__()
+    def __init__(self,x_train,y_train,x_test,y_test,**kwargs):
+        super(SVMLinearSVC,self).__init__(**kwargs)
+        self.x_train = x_train
+        self.y_train = y_train
+        self.x_test = x_test
+        self.y_test = y_test
     def fit(self,X_train,y_train):
         """ Fit the k-nearest neighbors classifier from the training dataset.
         
@@ -187,10 +191,19 @@ class SVMLinearSVC(LinearSVC):
         """
         y = super().predict(X)
         return y
+    def knn_process(self):
+        self.ob = self.fit(self.x_train, self.y_train)
+        self.y_pred = self.ob.predict(self.x_test)
+        self.score = self.ob.score(self.x_test, self.y_test)
+        return self.ob
 
 class Voting(VotingClassifier):
-    def __init__(self):
-        super(Voting,self).__init__()
+    def __init__(self,x_train,y_train,x_test,y_test,**kwargs):
+        super(Voting,self).__init__(**kwargs)
+        self.x_train = x_train
+        self.y_train = y_train
+        self.x_test = x_test
+        self.y_test = y_test
     def fit(self,X_train,y_train):
         """ Fit the k-nearest neighbors classifier from the training dataset.
         
@@ -227,4 +240,9 @@ class Voting(VotingClassifier):
         """
         y = super().predict(X)
         return y
+    def knn_process(self):
+        self.ob = self.fit(self.x_train, self.y_train)
+        self.y_pred = self.ob.predict(self.x_test)
+        self.score = self.ob.score(self.x_test, self.y_test)
+        return self.ob
                 
