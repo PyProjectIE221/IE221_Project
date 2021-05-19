@@ -5,7 +5,23 @@ from sklearn.model_selection import train_test_split
 pd.options.mode.chained_assignment = None
 
 class PreProcessing:
+    """Process DataFrame with many steps:
+        1. Fill missing data.
+        2. Remove any special characters : &$^@!)$*% ... 
+        3. lower character :  ABC -> abc
+        4. remove stop words : a, an, the, this (cause it has no value for trainning)
+        5. combine 25 title to a column name "filter"
+        6. split label as y, filter as x  
+        7. split x and y to x_train, x_test, y_train, y_test with size 0.2 (20% for test, 80% for train)
     
+         
+    Attributes:
+        pre_data(DataFrame): with 3 columns  'Date', 'Label', 'Filter'
+        x_train(list)
+        x_test(list)
+        y_train(list)
+        y_test(list)
+    """
     def __init__(self):
         #Leave this line below
         super().__init__()
@@ -132,7 +148,7 @@ class PreProcessing:
         self.y_train = self.y_train.tolist()
         
         
-    def fully_preprocess(self,data, method ='median'):
+    def fully_preprocess(self,data):
         """ PreProcess data with all step : fill null, remove stop word, combine. Finally, split data
         to x and y
         

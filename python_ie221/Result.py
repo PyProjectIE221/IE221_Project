@@ -4,8 +4,9 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import average_precision_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import confusion_matrix
-class Result:
-    def __init__(self,object):
+from Processing import Processing
+class Result(Processing):
+    def __init__(self,ProCessing):
         #leave this line below
         super().__init__()
         self.y_true = object.y_test
@@ -117,3 +118,4 @@ class Result:
         self.List_score = pd.DataFrame(List_score,columns = ['Cm','As','Ap','F1'],index = ['RF','KNN','SVM','NV'])
         return self.List_score
         
+
