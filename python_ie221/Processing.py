@@ -47,6 +47,7 @@ class Countvectorizer(CountVectorizer):
         vectorized = super().fit_transform(data)
         return vectorized
 
+
 class RandomForest(RandomForestClassifier):
     def __init__(self,x_train,y_train,x_test, y_test,**kwargs):
         super(RandomForest,self).__init__(**kwargs)
