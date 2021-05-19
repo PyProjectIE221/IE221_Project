@@ -31,6 +31,7 @@ class Processing:
     def Naive(self,**kwargs):
         self.NV = Naive(self.x_train,self.y_train,self.x_test,self.y_test,**kwargs).naive_process()
         return self.NV
+    
 class TFIDFVectorizer(TfidfVectorizer):
     def __init__(self,*args,**kwargs):
         super(TFIDFVectorizer,self).__init__(*args,**kwargs)
@@ -247,7 +248,7 @@ class Naive(BernoulliNB):
             X_test(array-like of shape (n_samples, n_features)): Test dataset
             y_test(array-like of shape (n_samples,) or (n_samples, n_outputs)): Test labels
 
-        Return:
+        Returns:
             Score(float) : Accuracy of model
         """
         predict_score = super().score(X_test,y_test)
@@ -258,7 +259,7 @@ class Naive(BernoulliNB):
         Args:
             X(array-like of shape (n_queries, n_features), or (n_queries, n_indexed)): Data which want to predict
 
-        Results:
+        Returns:
             y(ndarray of shape (n_queries,) or (n_queries, n_outputs)): Result from predict on X 
         """
         y = super().predict(X)

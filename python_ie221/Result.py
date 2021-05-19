@@ -14,6 +14,7 @@ class Result:
         self.KNN_y_pred = Processing.KNN.y_pred
         self.SVM_y_pred = Processing.SVM.y_pred
         self.NV_y_pred = Processing.NV.y_pred
+        
     def confusionmatrix(self,type='RF'):
         """ Compute confusion matrix to evaluate the accuracy of a classification.
         
@@ -21,7 +22,7 @@ class Result:
             y_true(array-like of shape (n_samples,)): Ground truth (correct) target values.
             y_pred(array-like of shape (n_samples,)): Estimated targets as returned by a classifier.
             
-        Results:
+        Returns:
             C(ndarray of shape (n_classes, n_classes)):Confusion matrix whose i-th row and j-th column entry indicates the number of samples with true label being i-th class and predicted label being j-th class.
 
         """
@@ -43,8 +44,8 @@ class Result:
             
             y_true(array-like of shape (n_samples,)): Ground truth (correct) target values.
             y_pred(array-like of shape (n_samples,)): Estimated targets as returned by a classifier.
-        Results:
             
+        Returns:
             Score(float):Predict score
         """
 
@@ -62,11 +63,10 @@ class Result:
         """ Compute average precision (AP) from prediction scores.
         
         Args:
-            
             y_true(array-like of shape (n_samples,)): Ground truth (correct) target values.
             y_pred(array-like of shape (n_samples,)): Estimated targets as returned by a classifier.
-        Results:
             
+        Returns:
             average_precision(float) : AP accuracy
         """
 
@@ -88,7 +88,7 @@ class Result:
             y_true(array-like of shape (n_samples,)): Ground truth (correct) target values.
             y_pred(array-like of shape (n_samples,)): Estimated targets as returned by a classifier.
         
-        Results:
+        Returns:
             f1_score(float or array of float)
         """
         
@@ -101,9 +101,52 @@ class Result:
         elif type == 'NV':
             self.F1 = f1_score(self.y_true,self.NV_y_pred)
         return self.F1
+    
+    def model_score(self,type='RF'):
+        """Compute 'type' model score
+        
+        Args:
+            type(string): RF: RandomForest, KNN: Kneighboor, SVM: SVMLinearSVC, NV: Navie Bayes
+        
+        Returns:
+            list : tupe(score's type(string), float )
+        """
+        if type == 'RF':
+            self.F1 = self.f1score('RF')
+            self.Ap = self.averageprecisionscore('RF')
+            self.As = self.accuracyscore('RF')
+            self.Cm = self.confusionmatrix('RF')
+            self.RF_score = [("CM",self.Cm),("F1",self.F1),("Ap",self.Ap),("Cm",self.Cm)]
+            return self.RF_score
+        elif type == 'KNN':
+            self.F1 = self.f1score('KNN')
+            self.Ap = self.averageprecisionscore('KNN')
+            self.As = self.accuracyscore('KNN')
+            self.Cm = self.confusionmatrix('KNN')
+            self.KNN_score = [("CM",self.Cm),("F1",self.F1),("Ap",self.Ap),("Cm",self.Cm)]
+            return self.KNN_score
+        elif type == 'SVM':
+            self.F1 = self.f1score('SVM')
+            self.Ap = self.averageprecisionscore('SVM')
+            self.As = self.accuracyscore('SVM')
+            self.Cm = self.confusionmatrix('SVM')
+            self.SVM_score = [("CM",self.Cm),("F1",self.F1),("Ap",self.Ap),("Cm",self.Cm)]
+            return self.SVM_score
+        elif type == 'NV':
+            self.F1 = self.f1score('NV')
+            self.Ap = self.averageprecisionscore('NV')
+            self.As = self.accuracyscore('NV')
+            self.Cm = self.confusionmatrix('NV')
+            self.NV_score = [("CM",self.Cm),("F1",self.F1),("Ap",self.Ap),("Cm",self.Cm)]
+            return self.NV_score
 
+        
+        
     def full_score(self):
         """ Compute full score for algorithm
+        
+        Returns:
+            List_score(DataFrame)
 
         """
 
