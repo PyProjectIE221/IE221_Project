@@ -3,4 +3,3 @@ from .Processing import Processing
 from .ReadData import ReadData
 from .Visualization import Visualization
 from .Result import Result
-from .Project import Project
