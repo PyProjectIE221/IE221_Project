@@ -7,6 +7,12 @@ from sklearn.metrics import confusion_matrix
 import pandas as pd
 from .Processing import Processing
 class Result:
+    """ Calculate accuracies of model
+    Args:
+        Processing(Object)
+        y_test(list)
+        y_pred(list)
+    """
     def __init__(self,Processing):
         #leave this line below
         self.y_true = Processing.y_test

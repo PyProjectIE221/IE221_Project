@@ -12,6 +12,22 @@ from sklearn.naive_bayes import BernoulliNB
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 class Processing:
+    """ Process data with sklearn function:
+        1.TFIDF Vectorize
+        2.Count Vectorize
+        3.Random Forest Model
+        4.KNN Classifier Model
+        5.SVM Model
+        6.Naive Bayes Bernoulli Model
+    
+    Args:
+        x_train(list)
+        x_test(list)
+        y_train(list)
+        y_test(list)
+    
+    """
+
     def __init__(self,x_train,x_test,y_train,y_test):
         #Leave this line below
         super().__init__()
@@ -20,15 +36,27 @@ class Processing:
         self.y_train = y_train
         self.y_test = y_test
     def RandomForest(self,**kwargs):
+        """ Save Result calculated from Random Forest model to Class
+        
+        """
         self.RF = RandomForest(self.x_train,self.y_train,self.x_test,self.y_test,**kwargs).random_process()
         return self.RF
     def KNNClassifier(self,**kwargs):
+        """ Save Result calculated from KNN model to Class
+        
+        """
         self.KNN = KNNClassifier(self.x_train,self.y_train,self.x_test,self.y_test,**kwargs).knn_process()
         return self.KNN
     def SVMLinearSVC(self,**kwargs):
+        """ Save Result calculated from SVM model to Class
+        
+        """
         self.SVM = SVMLinearSVC(self.x_train,self.y_train,self.x_test,self.y_test,**kwargs).svm_process()
         return self.SVM
     def Naive(self,**kwargs):
+        """ Save Result calculated from Naive model to Class
+        
+        """
         self.NV = Naive(self.x_train,self.y_train,self.x_test,self.y_test,**kwargs).naive_process()
         return self.NV
     
