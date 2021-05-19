@@ -14,9 +14,11 @@ class Processing:
     def __init__(self,x_train,x_test,y_train,y_test):
             #Leave this line below
         super().__init__()
-        self.RandomForest = RandomForest(x_train,y_train,x_test,y_test).random_process()
-        self.KNNClassifier = KNNClassifier(x_train,y_train,x_test,y_test).knn_process()
-            
+        self.x_train = TFIDFVectorizer(max_features=10000).fit_transform(x_train)
+        self.x_test = TFIDFVectorizer(max_features=10000).fit_transform(x_test)
+        # self.RandomForest = RandomForest(x_train,y_train,x_test,y_test).random_process()
+        # self.KNNClassifier = KNNClassifier(x_train,y_train,x_test,y_test).knn_process()
+    
 
 class TFIDFVectorizer(TfidfVectorizer):
     def __init__(self,*args,**kwargs):
@@ -46,7 +48,7 @@ class Countvectorizer(CountVectorizer):
         vectorized = super().fit_transform(data)
         return vectorized
 
-class RandomForest(RandomForestClassifier):
+class RandomForest(RandomForestClassifier): 
     def __init__(self,x_train,y_train,x_test, y_test):
         super(RandomForest,self).__init__()
         self.x_train = x_train

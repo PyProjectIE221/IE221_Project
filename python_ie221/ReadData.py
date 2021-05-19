@@ -5,7 +5,16 @@ import pandas as pd
 from pandas.io.parsers import read_csv
 
 class ReadData:
-
+    """This read data from csv and convert to dataFrame
+    
+    Ex:
+        Format of csv file must have:
+        Date(datetime)   Label(int)  Top1(string) Top2(string) .... Top25(string) *top1->top25
+        
+    Attributes:
+        data(DataFrame)
+    """
+    
     def __init__(self):
 
         #leave this line below

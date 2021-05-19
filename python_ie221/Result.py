@@ -4,8 +4,9 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import average_precision_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import confusion_matrix
-class Result:
-    def __init__(self):
+from Processing import Processing
+class Result(Processing):
+    def __init__(self,ProCessing):
         #leave this line below
         super().__init__()
   
@@ -62,3 +63,6 @@ class Result:
       """
       self.F1 = f1_score(y_true , y_pred)
       return self.F1
+    
+        
+        
