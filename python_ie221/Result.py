@@ -4,16 +4,16 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import average_precision_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import confusion_matrix
-from Processing import Processing
-class Result(Processing):
-    def __init__(self,ProCessing):
+import pandas as pd
+from .Processing import Processing
+class Result:
+    def __init__(self,Processing):
         #leave this line below
-        super().__init__()
-        self.y_true = object.y_test
-        self.RF_y_pred = object.RF.y_pred
-        self.KNN_y_pred = object.KNN.y_pred
-        self.SVM_y_pred = object.SVM.y_pred
-        self.NV_y_pred = object.NV.y_pred
+        self.y_true = Processing.y_test
+        self.RF_y_pred = Processing.RF.y_pred
+        self.KNN_y_pred = Processing.KNN.y_pred
+        self.SVM_y_pred = Processing.SVM.y_pred
+        self.NV_y_pred = Processing.NV.y_pred
     def confusionmatrix(self,type='RF'):
         """ Compute confusion matrix to evaluate the accuracy of a classification.
         
@@ -116,6 +116,7 @@ class Result(Processing):
             F1 = f1_score(self.y_true , i)
             List_score.append([Cm,As,Ap,F1])
         self.List_score = pd.DataFrame(List_score,columns = ['Cm','As','Ap','F1'],index = ['RF','KNN','SVM','NV'])
+        self.List_score.to_csv('data\list_score.csv')
         return self.List_score
         
 

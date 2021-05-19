@@ -1,13 +1,27 @@
 import python_ie221 as p1
-from python_ie221.Processing import *
 
+#Read data
 dt = p1.ReadData('data\Combined_News_DJIA.csv')
 
+#Preprocessing
 pre = p1.PreProcessing()
 
 pre.fully_preprocess(dt.data)
 
-x_train = TFIDFVectorizer(max_features=10000).fit_transform(pre.x_train)
-x_test = TFIDFVectorizer(max_features=10000).fit_transform(pre.x_test)
+#Processing
+process = p1.Processing(pre.x_train, pre.x_test, pre.y_train, pre.y_test)
+process.RandomForest()
+process.KNNClassifier()
+process.Naive()
+process.SVMLinearSVC()
 
-a = p1.Processing(x_train, x_test, y_train, y_test)
+#Result
+result = p1.Result(process)
+
+
+##visualize
+visual = p1.Visualization()
+visual.top20_common(pre.pre_data)
+visual.top20_common_go_up(pre.pre_data)
+visual.top20_common_go_down(pre.pre_data)
+visual.label_distribution(pre.pre_data)

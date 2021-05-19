@@ -43,7 +43,7 @@ class Visualization:
         Returns:
             Returns: This method does not return any value
     """
-    def top20_common_label_1(self,dataframe):
+    def top20_common_go_up(self,dataframe):
         counter = Counter()
         for row in range(dataframe.shape[0]):
             if(dataframe.iloc[row,1] == 1):
@@ -65,17 +65,17 @@ class Visualization:
         Returns:
             Returns: This method does not return any value
     """
-    def top20_common_label_0(self,dataframe):
+    def top20_common_go_down(self,dataframe):
         counter = Counter()
         for row in range(dataframe.shape[0]):
-            if(dataframe.iloc[row,1] == 1):
+            if(dataframe.iloc[row,1] == 0):
                 counter += Counter(dataframe.iloc[row,2].split(' '))
         most_common_20 = counter.most_common(20)
         data = pd.DataFrame(data = most_common_20, columns=['word','frequency'])
         
         fig,ax = plt.subplots(figsize=(10, 6))
         sb.barplot(x='word', y='frequency', data=data, ax=ax)
-        plt.title('Top 20 common word when the Dowjones goes up')
+        plt.title('Top 20 common word when the Dowjones goes down')
         plt.xticks(rotation='vertical') 
         
     
