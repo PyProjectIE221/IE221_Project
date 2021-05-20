@@ -38,7 +38,7 @@ class Visualization:
         
         fig,ax = plt.subplots(figsize=(10, 6))
         sb.barplot(x='word', y='frequency', data=data, ax=ax)
-        plt.title('Top 20 common word when the Dowjones goes up')
+        plt.title('Top 20 common word after remove stopwords')
         plt.xticks(rotation='vertical')
             
     
@@ -104,7 +104,7 @@ class Visualization:
         describe.rename(columns = {'index':'label','Label':'frequency'},inplace=True)
         
         fig,ax = plt.subplots(figsize=(10, 6))
-        sb.barplot(x='label', y='frequency',palette="blue", data=describe, ax=ax)
+        sb.barplot(x='label', y='frequency',palette="Blues", data=describe, ax=ax)
         plt.title('Label Distribution')
         plt.xticks(rotation='vertical')
 
@@ -132,8 +132,7 @@ class Visualization:
 
         
     def confusion_matrix(self,data):
-
-    """
+        """
      Visualize confusion matrix to easily evaluate model
 
         
@@ -142,7 +141,7 @@ class Visualization:
         
         Returns:
              This method does not return any value
-     """
+        """
         
         df_cm = pd.DataFrame(data = data, index = [i for i in '01'],columns = [i for i in '01'])
         plt.figure(figsize = (10,6))
