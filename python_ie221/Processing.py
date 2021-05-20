@@ -13,7 +13,21 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 class Processing:
     def __init__(self,x_train,x_test,y_train,y_test):
-        #Leave this line below
+        """ Process data with sklearn function:
+            1.TFIDF Vectorize
+            2.Count Vectorize
+            3.Random Forest Model
+            4.KNN Classifier Model
+            5.SVM Model
+            6.Naive Bayes Bernoulli Model
+    
+        Args:
+            x_train(list)
+            x_test(list)
+            y_train(list)
+            y_test(list)
+    
+        """
         super().__init__()
         self.x_train = TFIDFVectorizer(max_features = 10000).fit_transform(x_train)
         self.x_test = TFIDFVectorizer(max_features = 10000).fit_transform(x_test)
