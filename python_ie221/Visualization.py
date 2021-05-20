@@ -1,11 +1,8 @@
-#!/usr/bin/python
-#-*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 import seaborn as sb
 import pandas as pd
 from collections import Counter
-from sklearn.metrics import roc_auc_score
-from sklearn.metrics import roc_curve
+
 
 class Visualization:
     """This class receive data from Proprocessing and Result class to visualize.
@@ -36,14 +33,14 @@ class Visualization:
         counter = Counter()
         for row in range(dataframe.shape[0]):
             counter += Counter(dataframe.iloc[row,2].split(' '))
-
         most_common_20 = counter.most_common(20)
         data = pd.DataFrame(data = most_common_20, columns=['word','frequency'])
-
+        
         fig,ax = plt.subplots(figsize=(10, 6))
         sb.barplot(x='word', y='frequency', data=data, ax=ax)
-        plt.title('Top 20 common word')
+        plt.title('Top 20 common word when the Dowjones goes up')
         plt.xticks(rotation='vertical')
+            
     
 
   
@@ -107,13 +104,14 @@ class Visualization:
         describe.rename(columns = {'index':'label','Label':'frequency'},inplace=True)
         
         fig,ax = plt.subplots(figsize=(10, 6))
-        sb.barplot(x='label', y='frequency', data=describe, ax=ax)
+        sb.barplot(x='label', y='frequency',palette="blue", data=describe, ax=ax)
         plt.title('Label Distribution')
         plt.xticks(rotation='vertical')
 
 
 
-    def chart_score(self,data):
+    def chart_score(self,dataframe):
+
         """Visualize the different assessment method between models: AP, Accuracy, F1
         
         Args: 
@@ -122,28 +120,42 @@ class Visualization:
         Returns:
             Returns: This method does not return any value
         """
-        
-        df_score = pd.DataFrame(data = array,columns=['name_model','frequency'])
+       
+        dataframe.rename(columns={'Unnamed: 0':'Model'}, inplace=True)
+        dataframe.drop('Cm', axis=1, inplace=True)
 
-        fig,ax = plt.subplots(figsize=(10, 6))
-        sb.barplot(x='name_model', y='frequency', data = df_score, ax = ax)
-        plt.title('The different acurrayscore between models')
-        plt.xticks(rotation='vertical')
+        td = dataframe.melt(id_vars='Model').rename(columns=str.title)
+        fig,ax = plt.subplots(figsize=(10, 10))
+        sb.barplot(x='Model', y='Feq', hue='Variable', data=td, ax=ax)
+        sb.despine(fig)
 
 
         
     def confusion_matrix(self,data):
-    """Visualize confusion matrix to easily evaluate model
+
+    """
+     Visualize confusion matrix to easily evaluate model
+
         
-        Args: 
-            data(list): 
+        Args:
+             data(list): 
         
         Returns:
-            Returns: This method does not return any value
-    """
-        df_cm = pd.DataFrame(array, index = [i for i in '01'],
-                  columns = [i for i in '01'])
-        plt.figure(figsize = (10,7))
-        sb.heatmap(df_cm, annot=True)
+             This method does not return any value
+     """
+        
+        df_cm = pd.DataFrame(data = data, index = [i for i in '01'],columns = [i for i in '01'])
+        plt.figure(figsize = (10,6))
+        sb.heatmap(df_cm,annot=True)
+        
+
+    def result_visualization(self,dataframe,listscore):
+        self.top20_common(dataframe)
+        self.top20_common_go_up(dataframe)
+        self.top20_common_go_down(dataframe)
+        self.label_distribution(dataframe)
+        self.chart_score(listscore)
+        # self.confusion_matrix()
+        
 
     
