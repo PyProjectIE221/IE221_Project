@@ -34,7 +34,7 @@ class PreProcessing:
         
         Returns:
             Series: Object with missing values
-        
+        su
         """
         print("\nNumber of NaN in your data: ",data.isnull().sum().sum())
         return data.isnull().sum()

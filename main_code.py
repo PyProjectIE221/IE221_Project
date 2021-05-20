@@ -2,7 +2,7 @@ import python_ie221 as p1
 import pickle
 
 #Read data
-dt = p1.ReadData('data\Combined_News_DJIA.csv')
+dt = p1.ReadData('data/Combined_News_DJIA.csv')
 
 #Preprocessing
 pre = p1.PreProcessing()
