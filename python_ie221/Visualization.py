@@ -110,9 +110,8 @@ class Visualization:
 
 
 
-
-
     def chart_score(self,dataframe):
+
         """Visualize the different assessment method between models: AP, Accuracy, F1
         
         Args: 
@@ -121,7 +120,7 @@ class Visualization:
         Returns:
             Returns: This method does not return any value
         """
-        
+       
         dataframe.rename(columns={'Unnamed: 0':'Model'}, inplace=True)
         dataframe.drop('Cm', axis=1, inplace=True)
 
@@ -134,19 +133,21 @@ class Visualization:
         
     def confusion_matrix(self,data):
 
-        """Visualize confusion matrix to easily evaluate model
+    """
+     Visualize confusion matrix to easily evaluate model
+
         
-            Args: 
-                data(list): 
+        Args:
+             data(list): 
         
-            Returns:
-                Returns: This method does not return any value
-        """
+        Returns:
+             This method does not return any value
+     """
         
         df_cm = pd.DataFrame(data = data, index = [i for i in '01'],columns = [i for i in '01'])
         plt.figure(figsize = (10,6))
-        sb.heatmap(df_cm, annot=True)
-
+        sb.heatmap(df_cm,annot=True)
+        
 
     def result_visualization(self,dataframe,listscore):
         self.top20_common(dataframe)
