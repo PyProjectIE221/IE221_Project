@@ -135,6 +135,7 @@ class Visualization:
 
         
     def confusion_matrix(self,dataframe):
+
         """
      Visualize confusion matrix to easily evaluate model
 
