@@ -155,7 +155,7 @@ class Visualization:
             plt.figure(figsize = (10,8))
             plt.title('Confusion Matrix of '+ dataframe.iloc[i,0])
             plt.xticks(rotation='vertical')
-            sb.heatmap(df_cm,annot=True,fmt='d')
+            sb.heatmap(df_cm,annot=True,fmt='d', annot_kws={"fontsize":25})
             
         
 

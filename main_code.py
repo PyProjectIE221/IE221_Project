@@ -22,8 +22,7 @@ result.full_score()
 
 ##visualize
 visual = p1.Visualization()
-visual.label_distribution(pre.pre_data)
-i = result.List_score.iloc[0,0]
+visual.result_visualization(pre.pre_data, result.List_score)
 
 #Save class contains models by pickle
 filename = "Model"
