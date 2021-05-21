@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import seaborn as sb
 import pandas as pd
 from collections import Counter
+import numpy as np
 
 
 class Visualization:
@@ -34,10 +35,10 @@ class Visualization:
         for row in range(dataframe.shape[0]):
             counter += Counter(dataframe.iloc[row,2].split(' '))
         most_common_20 = counter.most_common(20)
-        data = pd.DataFrame(data = most_common_20, columns=['word','frequency'])
+        data = pd.DataFrame(data = most_common_20, columns=['Word','Frequency'])
         
         fig,ax = plt.subplots(figsize=(10, 6))
-        sb.barplot(x='word', y='frequency', data=data, ax=ax)
+        sb.barplot(x='Word', y='Frequency', data=data, ax=ax)
         plt.title('Top 20 common word after remove stopwords')
         plt.xticks(rotation='vertical')
             
@@ -59,10 +60,10 @@ class Visualization:
             if(dataframe.iloc[row,1] == 1):
                 counter += Counter(dataframe.iloc[row,2].split(' '))
         most_common_20 = counter.most_common(20)
-        data = pd.DataFrame(data = most_common_20, columns=['word','frequency'])
+        data = pd.DataFrame(data = most_common_20, columns=['Word','Frequency'])
         
         fig,ax = plt.subplots(figsize=(10, 6))
-        sb.barplot(x='word', y='frequency', data=data, ax=ax)
+        sb.barplot(x='Word', y='Frequency', data=data, ax=ax)
         plt.title('Top 20 common word when the Dowjones goes up')
         plt.xticks(rotation='vertical')  
         
@@ -82,10 +83,10 @@ class Visualization:
             if(dataframe.iloc[row,1] == 0):
                 counter += Counter(dataframe.iloc[row,2].split(' '))
         most_common_20 = counter.most_common(20)
-        data = pd.DataFrame(data = most_common_20, columns=['word','frequency'])
+        data = pd.DataFrame(data = most_common_20, columns=['Word','Frequency'])
         
         fig,ax = plt.subplots(figsize=(10, 6))
-        sb.barplot(x='word', y='frequency', data=data, ax=ax)
+        sb.barplot(x='Word', y='Frequency', data=data, ax=ax)
         plt.title('Top 20 common word when the Dowjones goes down')
         plt.xticks(rotation='vertical') 
         
@@ -101,10 +102,10 @@ class Visualization:
             Returns: This method does not return any value
         """
         describe = dataframe['Label'].value_counts().reset_index()
-        describe.rename(columns = {'index':'label','Label':'frequency'},inplace=True)
+        describe.rename(columns = {'index':'Label','Label':'Frequency'},inplace=True)
         
-        fig,ax = plt.subplots(figsize=(10, 6))
-        sb.barplot(x='label', y='frequency',palette="Blues", data=describe, ax=ax)
+        fig,ax = plt.subplots(figsize=(6,8))
+        sb.barplot(x='Label', y='Frequency',palette="Blues", data=describe, ax=ax)
         plt.title('Label Distribution')
         plt.xticks(rotation='vertical')
 
@@ -120,32 +121,42 @@ class Visualization:
         Returns:
             Returns: This method does not return any value
         """
-       
-        dataframe.rename(columns={'Unnamed: 0':'Model'}, inplace=True)
+        dataframe = dataframe.reset_index()
+        dataframe.rename(columns={'index':'Model'}, inplace=True)
         dataframe.drop('Cm', axis=1, inplace=True)
 
         td = dataframe.melt(id_vars='Model').rename(columns=str.title)
-        fig,ax = plt.subplots(figsize=(10, 10))
-        sb.barplot(x='Model', y='Feq', hue='Variable', data=td, ax=ax)
+        fig,ax = plt.subplots(figsize=(10, 7))
+        sb.barplot(x='Model', y='Value', hue='Variable', data=td, ax=ax)
+        plt.title('Chart score')
+        plt.xticks(rotation='vertical')
         sb.despine(fig)
 
 
         
-    def confusion_matrix(self,data):
+    def confusion_matrix(self,dataframe):
+
         """
      Visualize confusion matrix to easily evaluate model
 
         
         Args:
-             data(list): 
+             data(dataframe): 
         
         Returns:
              This method does not return any value
         """
         
-        df_cm = pd.DataFrame(data = data, index = [i for i in '01'],columns = [i for i in '01'])
-        plt.figure(figsize = (10,6))
-        sb.heatmap(df_cm,annot=True)
+        dataframe = dataframe.reset_index()
+        for i in range(dataframe.shape[0]):
+            data = dataframe.iloc[i,1]
+        
+            df_cm = pd.DataFrame(data = data)
+            plt.figure(figsize = (10,8))
+            plt.title('Confusion Matrix of '+ dataframe.iloc[i,0])
+            plt.xticks(rotation='vertical')
+            sb.heatmap(df_cm,annot=True,fmt='d', annot_kws={"fontsize":25})
+            
         
 
     def result_visualization(self,dataframe,listscore):
@@ -154,7 +165,7 @@ class Visualization:
         self.top20_common_go_down(dataframe)
         self.label_distribution(dataframe)
         self.chart_score(listscore)
-        # self.confusion_matrix()
+        self.confusion_matrix(listscore)
         
 
     
