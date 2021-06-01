@@ -28,7 +28,6 @@ class Processing:
             y_test(list)
     
         """
-        super().__init__()
         self.x_train = TFIDFVectorizer(max_features = 10000).fit_transform(x_train)
         self.x_test = TFIDFVectorizer(max_features = 10000).fit_transform(x_test)
         self.y_train = y_train

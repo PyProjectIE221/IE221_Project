@@ -16,10 +16,7 @@ class ReadData:
     """
     
     def __init__(self):
-
-        #leave this line below
-        super().__init__()
-    
+        pass
     def __init__(self, filepath):
         self.data = pd.read_csv(filepath)
 

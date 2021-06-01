@@ -16,8 +16,7 @@ class Visualization:
     """
     
     def __init__(self):
-        #leave this line below
-        super().__init__()
+        pass
 
     
     def top20_common(self,dataframe):

@@ -7,12 +7,15 @@ from sklearn.metrics import confusion_matrix
 import pandas as pd
 from .Processing import Processing
 class Result:
+    """This class take Processing Object and then compute accuracies for each model.
+    
+    Attribute:
+        List_score(DataFrame): Include score for each model
+        KNN/SVM/RF/NV_score(list): Ap,As,Cm,F1 for model
+        Ap,As,Cm,F1(float): score for model you call
+    """
     def __init__(self,Processing):
-        """ Result from model
-        Args: 
-        Processing(object)
-        """
-        
+
         self.y_true = Processing.y_test
         self.RF_y_pred = Processing.RF.y_pred
         self.KNN_y_pred = Processing.KNN.y_pred

@@ -23,8 +23,7 @@ class PreProcessing:
         y_test(list)
     """
     def __init__(self):
-        #Leave this line below
-        super().__init__()
+        pass
             
     def count_null(self, data):
         """Count how many null in your data
